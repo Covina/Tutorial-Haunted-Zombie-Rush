@@ -9,6 +9,8 @@ public class Player : MonoBehaviour {
 	private AudioSource audioSource;
 	private GameplayController gameplayController;
 
+	private bool isPlayerDead = false;
+
 	private float jumpForce = 75f;
 	private bool isJumping = false;
 
@@ -70,7 +72,9 @@ public class Player : MonoBehaviour {
 		//Debug.Log ("Player collided with " + collision.gameObject.name);
 
 		// Kill player if they hit a rock.
-		if (collision.gameObject.tag == "Obstacle") {
+		if (collision.gameObject.tag == "Obstacle" && !isPlayerDead) {
+
+			isPlayerDead = true;
 
 			// bounce player
 			rigidBody.AddForce (new Vector2 (-50, 20), ForceMode.Impulse);
@@ -81,7 +85,9 @@ public class Player : MonoBehaviour {
 
 			gameplayController.PlayerDied ();
 
-		} else if (collision.gameObject.tag == "Bridge") {
+		} else if (collision.gameObject.tag == "Bridge" && !isPlayerDead) {
+
+			isPlayerDead = true;
 
 			// Kill player if they hit the bridge
 			// bounce player

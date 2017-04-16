@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class PlatformMover : MonoBehaviour {
 
+
 	private float platformMovementSpeed = 3f;
 
 	// Where on the left will it trigger
-	private float resetPosition = -27.0f;
+	public float resetPosition = -27.0f;
 
 	// Where on the right does it move to.
-	private float startPosition = 22.0f;
+	public float startPosition = 22.0f;
 
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+	{
+
+
 	}
 	
 	// Update is called once per frame
@@ -25,11 +28,19 @@ public class PlatformMover : MonoBehaviour {
 		// move the platforms so long as the game is not over;
 		if (!GameManager.instance.GameOver) {
 
-			// move the ground to the left
+			// move the object to the left
 			transform.Translate (Vector3.left * (platformMovementSpeed * Time.deltaTime)); 
+
 
 			// if its far to the left, move it to the end on the right.
 			if (transform.position.x <= resetPosition) {
+
+				// if its a lava rock, randomize its start position a little
+				if (gameObject.tag == "Obstacle") {
+					
+					startPosition += Random.Range(-2f,2f);
+
+				}
 
 				// create new start location
 				Vector3 newPos = new Vector3 (startPosition, transform.position.y, transform.position.z);
@@ -38,6 +49,7 @@ public class PlatformMover : MonoBehaviour {
 				transform.position = newPos;
 
 			}
+
 
 		} // game not over
 

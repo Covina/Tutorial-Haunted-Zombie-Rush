@@ -7,10 +7,14 @@ public class LavaRock : PlatformMover {
 	[SerializeField] private Vector3 topPos;
 	[SerializeField] private Vector3 bottomPos;
 	[SerializeField] private float rockMovementSpeed = 2f;
-	private float rockRotationSpeed = 50f;
+	private float rockRotationSpeed = 100f;
 
 	// Use this for initialization
 	void Start () {
+
+		resetPosition = -17f;
+		startPosition = 10f;
+
 		StartCoroutine( Move(bottomPos) );
 	}
 	
@@ -28,6 +32,7 @@ public class LavaRock : PlatformMover {
 	}
 
 
+	// Up and Down vertical movement
 	IEnumerator Move (Vector3 target)
 	{
 

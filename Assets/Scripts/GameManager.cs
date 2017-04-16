@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
+	private Text scoreValue;
 
 	//[SerializeField] private GameObject mainMenu;
 	//[SerializeField] private GameObject endGameMenu;
@@ -14,6 +17,7 @@ public class GameManager : MonoBehaviour {
 	private bool gameOver = false;
 	private bool gameStarted = false;
 
+	private int playerScore = 0;
 
 	public bool PlayerActive {
 		get { return playerActive; }
@@ -30,6 +34,12 @@ public class GameManager : MonoBehaviour {
 		set { gameStarted = value; }
 	}
 
+	public int PlayerScore {
+		get { return playerScore; }
+		set { playerScore = value; }
+	}
+
+
 
 	void Awake ()
 	{
@@ -42,6 +52,30 @@ public class GameManager : MonoBehaviour {
 		}
 
 		DontDestroyOnLoad(gameObject);
+
+	}
+
+	void Start ()
+	{
+		scoreValue = GameObject.Find("ScoreValue").GetComponent<Text>();
+		UpdateScore ();
+	}
+
+
+	private void UpdateScore ()
+	{
+		// set the score
+		scoreValue.text = this.PlayerScore.ToString();
+
+	}
+
+
+	public void ScorePoints (int points)
+	{
+
+		this.PlayerScore += points;
+		UpdateScore();
+
 
 	}
 
