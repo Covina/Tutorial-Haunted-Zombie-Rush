@@ -15,13 +15,15 @@ public class LavaRock : PlatformMover {
 	}
 	
 	// Update is called once per frame
-	protected override void Update () {
+	protected override void Update ()
+	{
 
-		// rotate the lava rock
-		//transform.Rotate(0, Time.deltaTime * rockRotationSpeed, 0);
+		if (GameManager.instance.PlayerActive) {
+			// rotate the lava rock
+			//transform.Rotate(0, Time.deltaTime * rockRotationSpeed, 0);
 
-		base.Update();
-												
+			base.Update ();
+		}												
 	}
 
 

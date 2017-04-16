@@ -27,13 +27,18 @@ public class Player : MonoBehaviour {
 	void Update ()
 	{
 
-		if (Input.GetMouseButtonDown(0) ) {
-			//Debug.Log("Play Jump ANimation");
-			animator.Play("Jump");
-			rigidBody.useGravity = true;
-			isJumping = true;
+		if (!GameManager.instance.GameOver) {
+			if (Input.GetMouseButtonDown (0)) {
+
+				GameManager.instance.PlayerStartedGame();
+
+				//Debug.Log("Play Jump ANimation");
+				animator.Play ("Jump");
+				rigidBody.useGravity = true;
+				isJumping = true;
 
 
+			}
 		}
 
 	}
@@ -70,7 +75,8 @@ public class Player : MonoBehaviour {
 			//Destroy(gameObject);
 			audioSource.PlayOneShot(sfxDeath);
 
-			//Time.timeScale = 0f;
+			GameManager.instance.PlayerDied();
+
 		}
 
 

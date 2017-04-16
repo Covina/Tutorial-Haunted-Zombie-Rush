@@ -22,19 +22,23 @@ public class PlatformMover : MonoBehaviour {
 	protected virtual void Update ()
 	{
 
-		// move the ground to the left
-		transform.Translate (Vector3.left * (platformMovementSpeed * Time.deltaTime)); 
+		if (!GameManager.instance.GameOver) {
 
-		// if its far to the left, move it to the end on the right.
-		if (transform.position.x <= resetPosition) {
+			// move the ground to the left
+			transform.Translate (Vector3.left * (platformMovementSpeed * Time.deltaTime)); 
 
-			// create new start location
-			Vector3 newPos = new Vector3(startPosition, transform.position.y, transform.position.z);
+			// if its far to the left, move it to the end on the right.
+			if (transform.position.x <= resetPosition) {
 
-			// move it.
-			transform.position = newPos;
+				// create new start location
+				Vector3 newPos = new Vector3 (startPosition, transform.position.y, transform.position.z);
 
-		}
+				// move it.
+				transform.position = newPos;
+
+			}
+
+		} // game not over
 
 
 	}
