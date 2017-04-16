@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlatformMover : MonoBehaviour {
 
-	[SerializeField] private float platformMovementSpeed = 3f;
+	private float platformMovementSpeed = 3f;
 
 	// Where on the left will it trigger
-	[SerializeField] private float resetPosition = -22.0f;
+	private float resetPosition = -27.0f;
 
 	// Where on the right does it move to.
-	[SerializeField] private float startPosition = 27.0f;
+	private float startPosition = 22.0f;
 
 
 	// Use this for initialization

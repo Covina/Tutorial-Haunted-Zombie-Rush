@@ -64,12 +64,29 @@ public class Player : MonoBehaviour {
 	// PLayer dies when it collides with the obstacle.
 	void OnCollisionEnter (Collision collision)
 	{
-		Debug.Log("Player collided with " + collision.gameObject.name);
-		
+		//Debug.Log ("Player collided with " + collision.gameObject.name);
+
+		// Kill player if they hit a rock.
 		if (collision.gameObject.tag == "Obstacle") {
 
 			// bounce player
-			rigidBody.AddForce (new Vector2(-50, 20), ForceMode.Impulse);
+			rigidBody.AddForce (new Vector2 (-50, 20), ForceMode.Impulse);
+
+			// kill Player
+			//Destroy(gameObject);
+			audioSource.PlayOneShot (sfxDeath);
+
+			GameManager.instance.PlayerDied ();
+
+		}
+
+
+		// Kill player if they hit the bridge
+		if (collision.gameObject.tag == "Bridge") {
+
+			// bounce player
+			//rigidBody.AddForce (new Vector2(-50, 20), ForceMode.Impulse);
+			rigidBody.AddTorque (transform.up * 5000f);
 
 			// kill Player
 			//Destroy(gameObject);
