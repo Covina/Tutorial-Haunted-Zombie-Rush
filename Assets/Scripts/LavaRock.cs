@@ -18,6 +18,7 @@ public class LavaRock : PlatformMover {
 	protected override void Update ()
 	{
 
+		// only move the rocks if the player has clicked to start the game
 		if (GameManager.instance.PlayerActive) {
 			// rotate the lava rock
 			//transform.Rotate(0, Time.deltaTime * rockRotationSpeed, 0);

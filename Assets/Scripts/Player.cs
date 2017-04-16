@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
 	private Animator animator;
 	private Rigidbody rigidBody;
 	private AudioSource audioSource;
+	private GameplayController gameplayController;
 
 	private float jumpForce = 75f;
 	private bool isJumping = false;
@@ -21,18 +22,20 @@ public class Player : MonoBehaviour {
 		animator = GetComponent<Animator>();
 		rigidBody = GetComponent<Rigidbody>();
 		audioSource = GetComponent<AudioSource>();
+		gameplayController = FindObjectOfType<GameplayController>().GetComponent<GameplayController>();
+
+
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
 
-		if (!GameManager.instance.GameOver && GameManager.instance.GameStarted) {
+		if (!GameManager.instance.GameOver) {
 			if (Input.GetMouseButtonDown (0)) {
 
-				GameManager.instance.PlayerStartedGame();
+				GameManager.instance.PlayerActive = true;
 
-				//Debug.Log("Play Jump ANimation");
 				animator.Play ("Jump");
 				rigidBody.useGravity = true;
 				isJumping = true;
@@ -76,14 +79,11 @@ public class Player : MonoBehaviour {
 			//Destroy(gameObject);
 			audioSource.PlayOneShot (sfxDeath);
 
-			GameManager.instance.PlayerDied ();
+			gameplayController.PlayerDied ();
 
-		}
+		} else if (collision.gameObject.tag == "Bridge") {
 
-
-		// Kill player if they hit the bridge
-		if (collision.gameObject.tag == "Bridge") {
-
+			// Kill player if they hit the bridge
 			// bounce player
 			//rigidBody.AddForce (new Vector2(-50, 20), ForceMode.Impulse);
 			rigidBody.AddTorque (transform.up * 5000f);
@@ -92,7 +92,7 @@ public class Player : MonoBehaviour {
 			//Destroy(gameObject);
 			audioSource.PlayOneShot(sfxDeath);
 
-			GameManager.instance.PlayerDied();
+			gameplayController.PlayerDied();
 
 		}
 

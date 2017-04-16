@@ -22,6 +22,7 @@ public class PlatformMover : MonoBehaviour {
 	protected virtual void Update ()
 	{
 
+		// move the platforms so long as the game is not over;
 		if (!GameManager.instance.GameOver) {
 
 			// move the ground to the left
