@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LavaRock : MonoBehaviour {
+public class LavaRock : PlatformMover {
 
 	[SerializeField] private Vector3 topPos;
 	[SerializeField] private Vector3 bottomPos;
@@ -15,11 +15,12 @@ public class LavaRock : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 
 		// rotate the lava rock
-		transform.Rotate(0, Time.deltaTime * rockRotationSpeed, 0);
+		//transform.Rotate(0, Time.deltaTime * rockRotationSpeed, 0);
 
+		base.Update();
 												
 	}
 
@@ -43,12 +44,15 @@ public class LavaRock : MonoBehaviour {
 
 		}
 
-		Debug.Log("Reached Function");
+		//Debug.Log("Reached end point now changing direction");
 
+		// small delay
 		yield return new WaitForSeconds (0.5f);
 
+		// set new direction
 		Vector3 newTarget = (target.y == topPos.y) ? bottomPos : topPos;
 
+		// recursively call 
 		StartCoroutine( Move(newTarget) );
 
 	}
