@@ -17,7 +17,7 @@ public class BackgroundMovement : MonoBehaviour {
 		startingY = transform.position.y;
 
 		// randomize the movement speed;  higher is slower
-		movementSpeedDivisor = Random.Range(8f, 16f);
+		movementSpeedDivisor = Random.Range(6f, 16f);
 	}
 	
 	// Update is called once per frame
