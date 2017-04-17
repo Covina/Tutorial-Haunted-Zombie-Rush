@@ -6,7 +6,7 @@ public class BackgroundMovement : MonoBehaviour {
 
 	private int direction = 1;
 	private float startingY;
-	private float movementDistance = 0.25f;
+	private float movementDistance = 0.50f;
 
 	private float movementSpeedDivisor = 10;
 
