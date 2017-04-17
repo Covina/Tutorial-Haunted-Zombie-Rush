@@ -5,16 +5,18 @@ using UnityEngine;
 public class Brains : MonoBehaviour {
 
 	private AudioSource audioSource;
+	[SerializeField] private AudioClip sfxBrainChomp;
+
 
 	private int brainPoints = 1;
 
 
-	[SerializeField] private AudioClip sfxBrainChomp;
-
 	// Use this for initialization
 	void Start ()
 	{
-		audioSource = gameObject.GetComponent<AudioSource> ();
+
+		// Get the audio source component
+		audioSource = GetComponent<AudioSource>();
 
 		if (!audioSource) {
 			Debug.Log("No audioSource found on this Brain");
@@ -22,11 +24,6 @@ public class Brains : MonoBehaviour {
 
 	}
 	
-//	// Update is called once per frame
-//	void Update () {
-//		
-//	}
-
 
 	void OnTriggerEnter (Collider collider)
 	{
@@ -35,17 +32,22 @@ public class Brains : MonoBehaviour {
 		if (collider.tag == "Player") {
 
 			// Score Points
-			GameManager.instance.ScorePoints(brainPoints);
+			GameManager.instance.ScorePoints (brainPoints);
 
-			// Play the Sound Effect
-			audioSource.clip = sfxBrainChomp;
-			audioSource.Play();
+
+			if (!sfxBrainChomp) {
+				Debug.Log("No sfx found for sfxBrainChomp");
+			}
+
+			//Debug.Log("about to play sfx: [" + sfxBrainChomp + "]");
+
+			// play jump sound
+			//audioSource.PlayOneShot(sfxBrainChomp);
+			AudioSource.PlayClipAtPoint(sfxBrainChomp, transform.position);
 
 			// destroy brain collectable.
 			Destroy(gameObject);
 
-
-			//Debug.Log("Current Score: " + GameManager.instance.PlayerScore);
 
 		}
 
