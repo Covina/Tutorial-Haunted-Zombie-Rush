@@ -102,6 +102,8 @@ public class GameManager : MonoBehaviour {
 	public void UpdateFinalScore ()
 	{
 
+		Debug.Log("Current Score [" + this.PlayerScore + "] || Best Score [" + GetBestScore() + "]");
+
 		// update last score
 		Text lastScoreValue = GameObject.Find ("LastScoreValue").GetComponent<Text> ();
 		lastScoreValue.text = this.PlayerScore.ToString();
@@ -115,7 +117,7 @@ public class GameManager : MonoBehaviour {
 
 		// update last score
 		Text bestScoreValue = GameObject.Find ("BestScoreValue").GetComponent<Text> ();
-		bestScoreValue.text = this.PlayerScore.ToString();
+		bestScoreValue.text = GetBestScore().ToString();
 
 
 	}
