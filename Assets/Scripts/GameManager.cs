@@ -58,17 +58,18 @@ public class GameManager : MonoBehaviour {
 	void Start ()
 	{
 		
-		//UpdateScore ();
+	
 	}
 
 	// Set their best score ever
-	private void SetBestScore (int newBestScore)
+	public void SetBestScore (int newBestScore)
 	{
 		PlayerPrefs.SetInt("BESTSCORE", newBestScore);
+		PlayerPrefs.Save();
 	}
 
 	// Retrieve the best score ever
-	private int GetBestScore ()
+	public int GetBestScore ()
 	{
 		return PlayerPrefs.GetInt("BESTSCORE");
 	}
@@ -106,7 +107,9 @@ public class GameManager : MonoBehaviour {
 		lastScoreValue.text = this.PlayerScore.ToString();
 
 		// update best score
-		if (this.PlayerScore > this.GetBestScore ()) {
+		if (this.PlayerScore > GetBestScore() ) {
+			Debug.Log("new high score detected:  [" + this.PlayerScore + "] is larger than getbestscore [" + GetBestScore() + "]");
+
 			SetBestScore(this.PlayerScore);
 		}
 

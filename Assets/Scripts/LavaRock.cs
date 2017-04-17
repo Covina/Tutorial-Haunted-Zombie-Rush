@@ -7,7 +7,7 @@ public class LavaRock : PlatformMover {
 	[SerializeField] private Vector3 topPos;
 	[SerializeField] private Vector3 bottomPos;
 	[SerializeField] private float rockMovementSpeed = 2f;
-	private float rockRotationSpeed = 100f;
+	//private float rockRotationSpeed = 100f;
 
 	// Use this for initialization
 	void Start () {
