@@ -11,6 +11,8 @@ public class GameplayController : MonoBehaviour {
 	// get the Game Over Menu panel
 	[SerializeField] private GameObject endGameMenu;
 
+	[SerializeField] private GameObject gameScoreHeader;
+
 	// spawn position
 	private float minX, maxX, minY, maxY, zPos;
 
@@ -30,19 +32,22 @@ public class GameplayController : MonoBehaviour {
 		zPos = -7.3f;
 
 
-		for (int i = 0; i < 2; i++) {
-
-			SpawnBrain();
-
-		}
+//		for (int i = 0; i < 2; i++) {
+//
+//			SpawnBrain();
+//
+//		}
 
 
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 
-		SpawnBrain();
+		if (GameManager.instance.PlayerActive) {
+			SpawnBrain ();
+		}
 
 	}
 
@@ -53,6 +58,7 @@ public class GameplayController : MonoBehaviour {
 
 		// Set Game Over to true to stop platform moving
 		GameManager.instance.GameOver = true;
+		GameManager.instance.PlayerActive = false;
 
 		// wait a few seconds, then display the Game Over UI screen
 		StartCoroutine( DisplayGameOverScreen() );
@@ -62,11 +68,21 @@ public class GameplayController : MonoBehaviour {
 	IEnumerator DisplayGameOverScreen ()
 	{
 
+
+
 		// wait some time
 		yield return new WaitForSeconds (2.0f);
 
+		// turn off the in-game header
+		gameScoreHeader.SetActive(false);
+
+
+
 		// turn on the End Game Menu
 		endGameMenu.SetActive (true);
+
+		// store this score and retrieve best score ever
+		GameManager.instance.UpdateFinalScore();
 	}
 
 
@@ -77,6 +93,9 @@ public class GameplayController : MonoBehaviour {
 		GameManager.instance.PlayerActive = false;
 		GameManager.instance.GameOver = false;
 		GameManager.instance.GameStarted = false;
+
+		// ensure cleanup
+		GameManager.instance.ResetGame();
 
 		SceneManager.LoadScene("Main Menu");
 
@@ -90,6 +109,9 @@ public class GameplayController : MonoBehaviour {
 		GameManager.instance.GameOver = false;
 		GameManager.instance.GameStarted = true;
 
+		// ensure cleanup
+		GameManager.instance.ResetGame();
+
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
 	}
@@ -101,18 +123,10 @@ public class GameplayController : MonoBehaviour {
 
 		if (Time.time > (lastBrainSpawnTime + brainSpawnDelay)) {
 
-			Debug.Log ("Spawning Brain");
-
-//			Transform brainParent = (GameObject.Find ("Platform First").transform.position.x < GameObject.Find ("Platform Second").transform.position.x) 
-//				? GameObject.Find ("Platform Second").transform : GameObject.Find ("Platform First").transform;
-//
-//			GameObject brain = Instantiate (brainPrefab, brainParent) as GameObject;
-//
-//			// generate spawn location
-//			Vector3 brainSpawnLoc = new Vector3 (Random.Range (minX, maxX), Random.Range (minY, maxY), zPos); 
-
+			// generate the brain
 			GameObject brain = Instantiate (brainPrefab) as GameObject;
 
+			// figure out which platform is should belong to
 			Transform brainParent = (GameObject.Find ("Platform First").transform.position.x < GameObject.Find ("Platform Second").transform.position.x) 
 				? GameObject.Find ("Platform Second").transform : GameObject.Find ("Platform First").transform;
 

@@ -38,7 +38,8 @@ public class Brains : MonoBehaviour {
 			GameManager.instance.ScorePoints(brainPoints);
 
 			// Play the Sound Effect
-			audioSource.PlayOneShot(sfxBrainChomp);
+			audioSource.clip = sfxBrainChomp;
+			audioSource.Play();
 
 			// destroy brain collectable.
 			Destroy(gameObject);
